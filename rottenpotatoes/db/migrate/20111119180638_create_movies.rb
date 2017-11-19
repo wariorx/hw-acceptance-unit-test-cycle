@@ -7,11 +7,18 @@ class CreateMovies < ActiveRecord::Migration
       t.datetime :release_date
       # Add fields that let Rails automatically keep track
       # of when movies are added or modified:
-      t.timestamps
+      t.timestamps  
     end
+    #add_column(:movies,director,string)
   end
 
   def down
     drop_table :movies
   end
+=begin
+  def add_director
+    add_column(:movies,director,string)
+  end
+=end
+  
 end
