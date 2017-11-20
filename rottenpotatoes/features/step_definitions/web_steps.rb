@@ -242,7 +242,9 @@ end
 Then /^(?:|I )should be on (.+)$/ do |page_name|
   current_path = URI.parse(current_url).path
   if current_path.respond_to? :should
-    current_path.should == path_to(page_name)
+  #route = Movie.find_by(title: $1)
+    current_path.should == path_to(page_name) #OG
+    #current_path.should == path_to(route)
   else
     assert_equal path_to(page_name), current_path
   end
