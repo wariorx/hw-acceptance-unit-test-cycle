@@ -68,7 +68,7 @@ def similar#non of this probably works yet, but it should be a step on the right
     
     if @similar_movies.length == 1 #sad path
       flash[:notice] = "'#{@movie.title}' has no director info"
-      redirect_to "/"
+      redirect_to movies_path
     end
     
   #byebug
