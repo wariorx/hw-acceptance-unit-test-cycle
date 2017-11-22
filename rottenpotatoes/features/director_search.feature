@@ -32,3 +32,38 @@ Scenario: can't find similar movies if we don't know director (sad path)
   When  I follow "Find Movies With Same Director"
   Then  I should be on the home page
   And   I should see "'Alien' has no director info"
+  
+Scenario: creating a new movie
+  Given I am on the home page
+  When I follow "Add new movie"
+  And I fill in "Title" with "300"
+  And I select "R" from "Rating"
+  And I select "2012" from "movie_release_date_1i"
+  And I select "May" from "movie_release_date_2i"
+  And I select "5" from "movie_release_date_3i"
+  And I press "Save Changes"
+  Then I should see "300 was successfully created."
+
+Scenario: deleting a movie
+  Given I am on the home page
+  When I follow "Add new movie"
+  And I fill in "Title" with "300"
+  And I select "R" from "Rating"
+  And I select "2012" from "movie_release_date_1i"
+  And I select "May" from "movie_release_date_2i"
+  And I select "5" from "movie_release_date_3i"
+  And I press "Save Changes"
+  When I follow "More about 300"
+  And I press "Delete"
+  Then I should see "Movie '300' deleted."
+
+Scenario: returning to the home page
+  Given I am on the details page for "Alien"
+  When I follow "Back to movie list"
+  Then I should be on the home page
+
+Scenario: sorting movies by name
+  Given I am on the home page
+  When I follow "Movie Title"
+  Then I should see "Alien" before "Star Wars"
+  

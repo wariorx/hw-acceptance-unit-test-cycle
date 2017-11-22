@@ -28,7 +28,7 @@ class MoviesController < ApplicationController
     if params[:sort] != session[:sort] or params[:ratings] != session[:ratings]
       session[:sort] = sort
       session[:ratings] = @selected_racdtings
-      redirect_to :sort => sort, :ratings => @selected_ratings and return
+      #redirect_to :sort => sort, :ratings => @selected_ratings and return
     end
     @movies = Movie.where(rating: @selected_ratings.keys).order(ordering)
   end
@@ -45,6 +45,7 @@ class MoviesController < ApplicationController
 
   def edit
     @movie = Movie.find params[:id]
+    #byebug
   end
 
   def update
@@ -56,21 +57,23 @@ class MoviesController < ApplicationController
 
   def destroy
     @movie = Movie.find(params[:id])
-    @movie.destroy
+    @movie.destroy  
     flash[:notice] = "Movie '#{@movie.title}' deleted."
     redirect_to movies_path
   end
 
-def similar#non of this probably works yet, but it should be a step on the right direction
+def similar
     @movie = Movie.find(params[:id])
-    @similar_movies = Movie.where(director: @movie[:director])
+    #@similar_movies = Movie.where(director: @movie[:director])
+    @similar_movies = Movie.similar_movies(params[:id]) 
     #byebug
-    
-    if @similar_movies.length == 1 #sad path
-      flash[:notice] = "'#{@movie.title}' has no director info"
-      redirect_to movies_path
-    end
-    
+    #if @similar_movies #rspec wouldn't work otherwise
+      if @similar_movies[0][:director] == "" #sad path
+      #byebug
+        flash[:notice] = "'#{@movie.title}' has no director info"
+        redirect_to movies_path
+      end
+    #end
   #byebug
 end
 
